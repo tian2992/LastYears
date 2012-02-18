@@ -55,7 +55,17 @@ def date_year_average(list):
   date_list = [x for x in list if x != None]
   return reduce(lambda x,y: x+y, map(lambda da: da.year, date_list))/len(date_list)
 
+def pretty_print_unicode(na):
+  """
+  Because fuck you, that's why
+  """
+  return unicode(("%s - %s")%(na.artist.get_name(),na.get_title()))
 
+def date_formatter(date):
+  try:
+    return date.strftime("%Y-%m-%d")
+  except:
+    return "unknown"
 
 @app.route('/')
 def hello():
@@ -79,5 +89,5 @@ def get_user_page():
   date_average = date_year_average(map(lambda x: x["release_date"],top_albums_list))
 
   return render_template("album_list.html", user = lastfm_user,
-    album_list = top_albums_list, average = date_average)
+    album_list = top_albums_list, average = date_average, df = date_formatter, pp_uni = pretty_print_unicode)
 

@@ -11,7 +11,7 @@
 
 <ol>
 {% for album in album_list %}
-    <li><a href="{{ album["raw_album"].get_url() }}">{{ album["raw_album"] }}</a> - {{ album["release_date"].strftime("%Y-%m-%d") }} </li>
+    <li><a href="{{ album["raw_album"].get_url() }}">{{ pp_uni(album["raw_album"]) }}</a> - {{ df(album["release_date"]) }} </li>
 {% endfor %}
 </ol>
 
