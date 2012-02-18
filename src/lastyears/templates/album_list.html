@@ -2,9 +2,11 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="/static/screen.css" type="text/css" />
+    <link rel="stylesheet" href="/static/style.css" type="text/css" />
 </head>
 <body>
-
+<div class="container">
 <h1>Album List for {{ user.get_name() }}</h1>
 
 <p>Average Year for Top Albums: {{ average }}</p>
@@ -14,6 +16,6 @@
     <li><a href="{{ album["raw_album"].get_url() }}">{{ pp_uni(album["raw_album"]) }}</a> - {{ df(album["release_date"]) }} </li>
 {% endfor %}
 </ol>
-
+</div>
 </body>
 </html>

@@ -1,0 +1,13 @@
+.container {
+	width:460px;
+	border: 1px solid #ddd;
+	padding:20px;
+}
+h1, h2 { font-family: "Lato", sans-serif;
+	 font-weight: bold;
+         font-style: italic;
+ }  
+body {font-size:110%; font-family: "Linden Hill", serif; }
+.logo {width:128px; height:128px; top:0; float:right;}
+.red {color:#E40000;}
+a, .blue {color:#218BD1;}
