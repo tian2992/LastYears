@@ -1,0 +1,9 @@
+Copyright Sebastian Oliva, 2012 <http://sebastianoliva.com>
+Distributed under the GPLv2 or later
+
+Last Year
+a Last.fm API based app, that calculates the average year of your music collection, based on your top albums.
+
+Designed for the Google App Engine, still in working.
+
+Requires: python2, a WSGI web server, flask, pylast
