@@ -1,0 +1,4 @@
+Installed virtualenv in root directory
+    virtualenv venv --no-site-packages --distribute
+symbolic link from site-packages to /src/toiletrate/
+

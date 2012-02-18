@@ -1,0 +1,4 @@
+site-packages
+venv
+*.pyc
+.idea
