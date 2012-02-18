@@ -2,6 +2,7 @@
 import os
 import sys
 import datetime
+import hashlib
 
 if 'site-packages' not in sys.path:
   sys.path.append(os.path.join(os.path.dirname(__file__), "site-packages"))
@@ -13,6 +14,7 @@ from flask import render_template
 app = Flask('lastyears')
 
 import keys
+import models
 
 from pyechonest import config
 config.ECHO_NEST_API_KEY=keys.ECHONEST_API_KEY
@@ -31,6 +33,20 @@ def get_lastfm_user(username_string):
     app.logger.error("User {0} is not valid".format(user.get_name()))
     return None
 
+def generate_album_keyname(na):
+  return hashlib.md5(
+         unicode(("%s%s")%(na.artist.get_name(),na.get_title()))
+         .encode("utf-8")).hexdigest()
+
+def search_for_album(album):
+  """
+    Fetches an instance of Album if it exists
+  """
+  al = models.Album.get_by_key_name(generate_album_keyname(album))
+  app.logger.debug("Song searched {0}, found {1}".format(str(album),str(al)))
+  return al
+
+
 def album_info(album):
   """
     converts an album object into a dict with the artist name, the album_name,
@@ -40,7 +56,14 @@ def album_info(album):
   """
   #TODO: Try cacheing this stuff
 
+  datastore_album = search_for_album(album)
+
+  if (datastore_album):
+    #DO STUFF with it?
+    return datastore_album
+
   artist = album.get_artist()
+  artist_name = artist.get_name()
   album_name = album.get_name()
   try:
     release_date = datetime.datetime.\
@@ -48,6 +71,12 @@ def album_info(album):
   except:
     release_date = None # = datetime.datetime(1900,1,1)
   raw_album = album
+
+  db_album = models.Album(key_name=generate_album_keyname(album), artist_name = artist_name, album_name=album_name,
+    release_date = release_date.date() if isinstance(release_date,datetime.datetime) else None)
+
+  db_album.put()
+
   return {'artist':artist, 'album_name':album_name,
           'release_date':release_date, 'raw_album':raw_album}
 
